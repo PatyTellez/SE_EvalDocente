@@ -6,9 +6,13 @@
 
 package desdifusificacion;
 
+import java.io.EOFException;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.StringTokenizer;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,132 +20,333 @@ import java.io.RandomAccessFile;
  */
 public class desdifus 
 {
-    static double valor, x, p1, m1, m2, p2, max;
-    static String etiq;
+     
+    //ESTE ES EL METOD QUE REALIZA TODO LA DESDIFUZIFICACION Y PARA ELLO NECESITA 
+    //EL MODELO DIFUSO, QUE SE ENCUENTRA EN EL ARCHIVO --->MatrizSistemaDifSal.bin
+    //ADEMAS DE QUE NECESITARA LEER EL ARCHIVO QUE SALE DE LA INFERENCIA , ESTE ARCHIVO CONTIENE
+    //LOS VALORES DIFUSOS DE CADA ETIQUETA , Y CON ESOS VALORES SE PRETENDE HACER LA DESDIFUZIFICACION
+    //ESTE ARCHIVO ES ----->SalidaDifusa
     
-    static double limite=5.0, intervalo=0.001;
-    public double desdifusificar() throws IOException
+    public void desdifuzificar () throws FileNotFoundException, IOException
     {
-        //Inicialización del calculo de centroide
-        double centroide = 0.0 , area = 0.0, grados = 0.0, mayor = 0.0;
-        double [] valor = new double[5];
-        x = 0;
-        while(x < limite)
+        //RandomAccessFile sal_dif=new RandomAccessFile ("Salidas_difusas.bin", "r");
+        RandomAccessFile sal_dif=new RandomAccessFile ("src/archivos/bin/Salidas_difusas.bin", "r");
+        RandomAccessFile art=new RandomAccessFile ("src/archivos/bin/Matriz_Modelo_Difuso.bin", "r");
+        
+        //FORMATO DEL ARCHIVO DE SALIDAS DIFUSAS--->SalidaDifusa
+        
+        //char 2 bytes
+        //double 8 bytes       ------------char,duble.......char,double..............
+        
+        boolean ban=true;
+        char Etiqueta;
+        double grado, x1, x2, x3, x4;
+        double y, y1, y2, xt, x, mui, mult, acum=0, acumy=0;
+        try
         {
-            for (int i = 0; i < 5; i++) 
-            {
-                leerDatos(i);//Leemos los puntos del conjunto
-                if(x < m1)
-                {
-                    valor[i]=evaluarMenorM(x,p1,m1,m2,p2,max);
-                }
-                else if((x >= m1) && ( x <= m2))
-                {
-                    valor[i]=evaluarMedioM(x,p1,m1,m2,p2,max);
-                }
-                else if(x > m2)
-                {
-                    valor[i]=evaluarMayorM(x,p1,m1,m2,p2,max);
-                }         
-            } //fin de for
-            for (int i = 0; i < 1; i++) 
-            {
-                mayor= obtenerMayor(valor[i],valor[i+1],valor[i+2],valor[i+3],valor[i+4]);
-                System.out.println("El Grado de Pertenecia en "+x+" es "+mayor);
-            }
-            
-            //Realizamos la sumatoria Xi M(Xi)
-            area += (x * mayor);
-            
-            //Sumatoria de los grados de pertenencia
-            grados += mayor;
-            
-            //Se incrementa X el valor del intervalo
-            x += intervalo;
-        }
-        System.out.println("Área Final = " + area);
-        System.out.println("Sumatoria Grados de Membresia Final = " + grados);
-        
-        //Calculo de centroide
-        centroide = area / grados;
-        
-        return centroide;
-    }
-    static void leerDatos(int llave) throws FileNotFoundException, IOException
-    {
-        String etiqTemp;
-        //Formato Variables | etiq->String | P1, m1, m2, p2, max -> double
-        RandomAccessFile modelo_c = new RandomAccessFile("archivos/bin/modelo_c", "r");
-        RandomAccessFile entrada_desdif = new RandomAccessFile("archivos/bin/entrada_desdifusificacion", "rw");
-        modelo_c.seek(llave * 36);
-        etiq = modelo_c.readUTF();
-        p1 = modelo_c.readDouble();
-        m1 = modelo_c.readDouble();
-        m2 = modelo_c.readDouble();
-        p2 = modelo_c.readDouble();
-        for (int i = 0; i < 5; i++) 
-        {
-            entrada_desdif.seek(i * 12);
-            etiqTemp = entrada_desdif.readUTF();
-            if(etiqTemp.equalsIgnoreCase(etiq))
-                max = modelo_c.readDouble();
-        }
-    }
-    static double evaluarMenorM(double x,double a, double m1, double m2, double b, double max)
-    {
-        double resultado=0.0;
-        
-        resultado=((x-a)/(m1-a));
-        
-        return resultado;
-    }
-    static double evaluarMedioM(double x,double a, double m1, double m2, double b, double max)
-    {
-        double resultado=0.0;
-        
-        resultado=max;
-        
-        return resultado;
-    }
-    static double evaluarMayorM(double x,double a, double m1, double m2, double b, double max)
-    {
-        double resultado=0.0;
-        
-        resultado=((b-x)/(b-m2));
-        
-        return resultado;
-    }
-    static double obtenerMayor(double A,double B, double C, double D, double E)
-    {
-        double mayor=0.0;
+           String leer_Etiqueta="",aux="";
+           System.out.println("-----------------DESDIFUZIFICANDO---------------------------");
+           while (ban)
+           {
+               Etiqueta=sal_dif.readChar();         //-----leer la etiqueta
+               aux+=" "+Etiqueta;
+               grado=sal_dif.readDouble();     //-----leer valor de la etiqueta
+               aux+=" "+grado;
+               leer_Etiqueta+=art.readChar(); 
+               
+               System.out.println(aux);
+               aux="";
+               
+               x1=art.readDouble();             
+               x2=art.readDouble();              
+               x3=art.readDouble();             
+               x4=art.readDouble();
+              
+               leer_Etiqueta="";
+               y=grado;
+               y1=0;
+               y2=1;
+               xt=(((y-y1)/(y2-y1))*(x2-x1))+x1;
+               x=x1;
+               while (x<=xt)
+               {
+                    mui=funcion(x, x1, x2, y1, y2);
+                     
+                    mult=mui*x;
+                    
+                    x+=0.001;
+                     
+                    acum+=mult;
+                   
+                   
+                    acumy+=mui;
+               }
+               xt=(((y-1)/(0-1))*(x4-x3))+x3;
+               while(x<=xt){
+                   mui=grado;
+                   mult=mui*x;
+                   x+=0.001;
+                   acum+=mult;
+                   
+                   acumy+=mui;
+               }
+               xt=x4;
+               while (x<=xt){
+                   mui=funcion(x, x3, x4, 1, 0);
+                   mult=mui*x;
+                   x+=0.001;
+                   acum+=mult;
+                 
+                   acumy+=mui;
+               }
+
+           }
        
-        if(A >= B && A >= C && A >= D && A >= E)
-        {  
-            mayor=A;  
+       }catch (EOFException e){ }
+        
+       
+        double centroide=acum/acumy;
+        
+        char Etiqueta_salida=Obtener_Etiqueta_Real_Sallida(centroide);
+        if( Double.isNaN(centroide) )
+        {
+            System.out.println("VALOR REAL DE SALIDA = 0");
+            System.out.println("ETIQUETA DE SALIDA = ");
+            JOptionPane.showMessageDialog(null, "VALOR REAL DE SALIDA = 0\nNo Merece ser Nombrado Profesor" );
         }
         else
-        {  
-            if(B >= A && B >= C && B >= D && B >= E)
+        {
+            System.out.println("VALOR REAL DE SALIDA = "+centroide);
+            System.out.println("ETIQUETA DE SALIDA = "+Etiqueta_salida);
+            String Salida="";
+            switch(Etiqueta_salida)
             {
-                mayor=B;  
+                case 'P': Salida="Pesimo";
+                    break;
+                case 'M': Salida="Malo";
+                    break;
+                case 'R': Salida="Regular";
+                    break;
+                case 'B': Salida="Bueno";
+                    break;
+                case 'E': Salida="Excelente";
+                    break;                
             }
-            else
-            {  
-                if(C >= A && C >= B && C >= D && C >= E)
-                {  
-                    mayor=C;  
+            JOptionPane.showMessageDialog(null, "VALOR REAL DE SALIDA = "+centroide+"\nProfesor: "+Salida );
+            
+        }
+    }
+    
+    
+    
+    private double funcion(double x, double x1, double x2, double y1, double y2) {
+        double y=(((x-x1)/(x2-x1))*(y2-y1))+y1;
+        return y;
+    }
+  // ----------------------------------------------------------------------------------------------------------------------
+  // ----------------------------------------------------------------------------------------------------------------------
+    
+    //ESTE METODO LO UTILIZO UNA VEZ QUE YA TERMINA EL PROCESO DE DESDIFUZIFICACION, YA CUANDO
+    //HE OBTENIDO UN VALOR REAL, Y LO QUE QUIERO ES SABER A QUE ETIQUETA CORRESPONDE ESE VALOR---->P,M,R,B,E
+    
+    private char Obtener_Etiqueta_Real_Sallida(double centroide) throws FileNotFoundException, IOException {
+        char eti = 0; boolean ban=true;
+        double x1, x2;
+        RandomAccessFile ar=new RandomAccessFile ("src/archivos/bin/Matriz_Modelo_Difuso.bin", "r");
+        try{
+            while (ban)
+            {
+                eti=ar.readChar();
+                x1=ar.readDouble();
+                ar.readDouble();
+                ar.readDouble();
+                x2=ar.readDouble();
+                if (centroide>=x1&&centroide<=x2){
+                    ban=false;
                 }
-                else
-                {
-                    if(D >= A && D >= B && D >= C && D >= E)
-                    {
-                        mayor=D;  
-                    }
-                    else  
-                        mayor=E;  
-                }  
             }
         }
-        return mayor;
-   }
+        catch (EOFException e){}
+        return eti;
+    }
+    
+    
+    ///ESTE METODO ME AYUDA PARA ACOMODAR LAS ETIQUETAS EN EL ORDEN CORRECTO ANTES DE EMPEZAR LA DEZDIFUZIFICACION
+ public void acomodar_etiquetas () throws FileNotFoundException, IOException
+    {
+        boolean ban=true;
+        char Etiqueta;
+        double grado;
+        String matrix [] = new String [10];
+        RandomAccessFile sal_dif=new RandomAccessFile ("src/archivos/bin/Salidas_difusas.bin", "rw");
+        String formato="";
+       
+        try
+        {
+      System.out.println("-----------------ACOMODANDO---------------------------");
+         while (ban)
+           {
+               Etiqueta=sal_dif.readChar();         //-----leer la etiqueta
+               formato+=" "+Etiqueta;
+               grado=sal_dif.readDouble();     //-----leer valor de la etiqueta
+               formato+=" "+grado;
+               System.out.println(formato);
+               
+               
+           }
+          
+         
+         }catch (EOFException e){ }
+       
+        try
+        {
+        StringTokenizer  tokens = new StringTokenizer(formato," ");
+        int cont=0;
+        String eti;
+        while (ban)
+        {
+            eti=tokens.nextToken();
+           
+            if(eti.equals("P"))
+            {
+               matrix[0]=eti;
+               eti=tokens.nextToken();
+               matrix[1]=eti;
+             
+            }
+            if(eti.equals("M"))
+            {
+                matrix[2]=eti;
+               eti=tokens.nextToken();
+               matrix[3]=eti;
+            }
+            if(eti.equals("R"))
+            {
+                matrix[4]=eti;
+               eti=tokens.nextToken();
+               matrix[5]=eti;
+            }
+            if(eti.equals("B"))
+            {
+                matrix[6]=eti;
+               eti=tokens.nextToken();
+               matrix[7]=eti;
+            }
+            if(eti.equals("E"))
+            {
+               matrix[8]=eti;
+               eti=tokens.nextToken();
+               matrix[9]=eti;
+            }
+        }
+        
+        }catch (Exception e){
+            
+        }
+        sal_dif.seek(0);
+        for(int i=0;i<10;i++)
+        {
+        
+        Etiqueta = matrix[i].charAt(0);
+        grado=Double.parseDouble(matrix[i+1]);
+        sal_dif.writeChar(Etiqueta);
+        sal_dif.writeDouble(grado);
+        i++;
+        System.out.println( "Etiqueta "+Etiqueta+" valor "+grado );
+        }
+    }
+    
+ 
+ 
+ /*LOS METODOS SIGUIENTES SOLO SE USARON UNA SOLA VEZ PARA PODER IR PROBANDO EL SISTEMA POR PARTES
+ESTO ES QUE GENERABA LOS ARCHIVOS CON LOS QUE LA DESDIFUSIFICACION NECESITA, ESTO CON EL FIN DE ESTAR PROBANDO ESTA PARTE 
+DEL PROGRAMA*/
+   
+   //ESTE METODO SOLO ME AYUDO A GENERAR EL ARCHIVO QUE CONTIENE LOS VALORES DIFUSOS DE CADA ETIQUETA
+   //ESTO CON EL FIN DE PODER PROBAR LA DESDIFUZIFICACION 
+   //
+    public void archivo () throws IOException
+    {
+        char etiquetas []={'P','M','R','B','E'};
+        double valsalida []={1.0,0.0,0.0,0.0,0.0};
+        char a;
+        double b;
+        //double = 8 bytes
+        //char = 4 bytes
+        
+        int TamRegistro=10;
+        
+        RandomAccessFile WriteInd;
+        File Ind = null;
+        
+        Ind = new File ("src/archivos/bin/Salidas_difusas.bin");
+        WriteInd = new RandomAccessFile(Ind, "rw");
+    
+      for (int contador=0;contador<5;contador++)
+      {
+          
+                  
+                    WriteInd.seek(TamRegistro*contador);
+                    
+                    
+                    WriteInd.writeChar(etiquetas[contador]);
+                   
+                    WriteInd.seek((TamRegistro*contador)+2); 
+                  
+                    WriteInd.writeDouble(valsalida[contador]);
+                   
+                   
+      }
+       WriteInd.close(); 
+    }
+    //ESTE METODO SOLO LO UTILICE PARA GENERAR EL MODELO DIFUSO
+    //ESTO PARA FINES DE PRUEBA DEL SISTEMA
+    public void archivo_modelo_difuso () throws IOException
+    {
+        char etiquetas []={'P','M','R','B','E'};
+        double p1 []={0.0,   20.0,  55.0,  77.5,93.2};
+        double p2 []={0.1,   30.0,  70.0,  85.0,95.0};
+        double p3 []={15.0,  50.0,  70.0,  90.0,100.0};
+        double p4 []={25.0,  60.0,  85.0,  97.0,100.0};
+       
+        char a;
+        double b;
+        //double = 8 bytes
+        //char = 4 bytes
+        
+        int TamRegistro=34;
+        
+        RandomAccessFile WriteInd;
+        File Ind = null;
+        
+        Ind = new File ("Matriz_Modelo_Difuso.bin");
+        WriteInd = new RandomAccessFile(Ind, "rw");
+    
+      for (int contador=0;contador<5;contador++)
+      {
+          
+                     System.out.println(contador*TamRegistro);
+                    WriteInd.seek(TamRegistro*contador);
+                    a=etiquetas[contador];
+                    WriteInd.writeChar(a);
+                   
+                
+                    
+                    WriteInd.seek((TamRegistro*contador)+2); 
+                    WriteInd.writeDouble(p1[contador]);
+                   
+                    WriteInd.seek((TamRegistro*contador)+10); 
+                    WriteInd.writeDouble(p2[contador]);
+                    
+                    WriteInd.seek((TamRegistro*contador)+18); 
+                    WriteInd.writeDouble(p3[contador]);
+                    
+                    WriteInd.seek((TamRegistro*contador)+26); 
+                    WriteInd.writeDouble(p4[contador]);
+                    
+                    
+                   
+      }
+       WriteInd.close(); 
+    }
 }
