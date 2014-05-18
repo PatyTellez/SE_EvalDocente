@@ -12,6 +12,7 @@ import java.io.IOException;
 /**
  *
  * @author Alejandro Gómez Cruz
+ * @autor Jose Elias Gomez Lopez
  */
 public class Main 
 {

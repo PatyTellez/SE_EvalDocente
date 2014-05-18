@@ -9,6 +9,7 @@ package desdifusificacion;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.StringTokenizer;
@@ -26,6 +27,8 @@ public class desdifus
     //ADEMAS DE QUE NECESITARA LEER EL ARCHIVO QUE SALE DE LA INFERENCIA , ESTE ARCHIVO CONTIENE
     //LOS VALORES DIFUSOS DE CADA ETIQUETA , Y CON ESOS VALORES SE PRETENDE HACER LA DESDIFUZIFICACION
     //ESTE ARCHIVO ES ----->SalidaDifusa
+    
+    boolean calificar_un_solo_profesor=true;
     
     public void desdifuzificar () throws FileNotFoundException, IOException
     {
@@ -108,6 +111,22 @@ public class desdifus
         double centroide=acum/acumy;
         
         char Etiqueta_salida=Obtener_Etiqueta_Real_Sallida(centroide);
+        
+        calificacion_del_profesor_en_archivo_txt(centroide,Etiqueta_salida);
+       
+    }
+    
+    
+    
+    private double funcion(double x, double x1, double x2, double y1, double y2) {
+        double y=(((x-x1)/(x2-x1))*(y2-y1))+y1;
+        return y;
+    }
+    
+    //METODO PARA GUARDAR LA CALIFICACION DEL PROFESOR EN UN ARCHIVO DE SALIDA TXT
+    
+   void calificacion_del_profesor_en_archivo_txt (double centroide,   char Etiqueta_salida)
+   {
         if( Double.isNaN(centroide) )
         {
             System.out.println("VALOR REAL DE SALIDA = 0");
@@ -134,15 +153,39 @@ public class desdifus
             }
             JOptionPane.showMessageDialog(null, "VALOR REAL DE SALIDA = "+centroide+"\nProfesor: "+Salida );
             
+            
+            
+                        try
+             {
+             //creamos el archivo que guardara la calificacion del profesor
+             
+                 File archivo2=new File("src/archivos/txt/Calificacion_final_profesor.txt");
+                 
+                 if(archivo2.isFile()&&archivo2.exists()&&calificar_un_solo_profesor)
+                 {
+                     archivo2.delete();
+                     archivo2=new File("src/archivos/txt/Calificacion_final_profesor.txt");
+                 }
+               
+             
+             FileWriter escribir = new FileWriter(archivo2,true);
+             
+                       escribir.write("Calificacion del profesor = "+centroide+"  El Profesor es : "+Salida+"\n");
+                       
+              //Cerramos la conexion
+                escribir.close();
+             }
+             
+
+             //Si existe un problema al escribir cae aqui
+             catch(Exception e)
+             {
+             System.out.println("Error al escribir");
+             } 
+            
+            
         }
-    }
-    
-    
-    
-    private double funcion(double x, double x1, double x2, double y1, double y2) {
-        double y=(((x-x1)/(x2-x1))*(y2-y1))+y1;
-        return y;
-    }
+   }
   // ----------------------------------------------------------------------------------------------------------------------
   // ----------------------------------------------------------------------------------------------------------------------
     
