@@ -28,7 +28,10 @@ public class desdifus
     //LOS VALORES DIFUSOS DE CADA ETIQUETA , Y CON ESOS VALORES SE PRETENDE HACER LA DESDIFUZIFICACION
     //ESTE ARCHIVO ES ----->SalidaDifusa
     
-    boolean calificar_un_solo_profesor=true;
+    boolean calificar_un_solo_profesor=true;//esta bandera nos ayuda para poder especificar 
+                                            //si en el archivo calificacion_final_profesor
+                                            //queremos guardar la evaluacion de un solo profesor o de muchos profesores
+               
     
     public void desdifuzificar () throws FileNotFoundException, IOException
     {
