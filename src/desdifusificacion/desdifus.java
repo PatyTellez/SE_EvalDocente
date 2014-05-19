@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author Alejandro Gómez Cruz
+ * JOSE ELIAS GOMEZ LOPEZ
  */
 public class desdifus 
 {
@@ -32,12 +33,12 @@ public class desdifus
                                             //si en el archivo calificacion_final_profesor
                                             //queremos guardar la evaluacion de un solo profesor o de muchos profesores
                
-    
+    /*INICIA METODO PRINCIPAL PARA LA DESDIFUCIFICACION*/
     public void desdifuzificar () throws FileNotFoundException, IOException
     {
-        //RandomAccessFile sal_dif=new RandomAccessFile ("Salidas_difusas.bin", "r");
-        RandomAccessFile sal_dif=new RandomAccessFile ("src/archivos/bin/Salidas_difusas.bin", "r");
-        RandomAccessFile art=new RandomAccessFile ("src/archivos/bin/Matriz_Modelo_Difuso.bin", "r");
+        
+        RandomAccessFile sal_dif=new RandomAccessFile ("src/archivos/bin/entrada_desdifusificar.bin", "r");
+        RandomAccessFile art=new RandomAccessFile ("src/archivos/bin/Modelo_Difuso.bin", "r");
         
         //FORMATO DEL ARCHIVO DE SALIDAS DIFUSAS--->Salidas_difusas
         
@@ -119,7 +120,14 @@ public class desdifus
        
     }
     
+    /*TERMINA METODO PRINCIPAL DE LA DESDIFUCIFICACION, TODOS LOS DEMAS METODOS DE ABAJO SON UTILIZADOS POR ESTE
+     METODO PRINCIPALL*/
     
+    
+    /*-------------------------------------------------------------------------------------------------------------
+     --------------------------------------------------------------------------------------------------------------
+       ----------------------------------------------------------------------------------------------------------
+         ------------------------------------------------------------------------------------------------------*/
     
     private double funcion(double x, double x1, double x2, double y1, double y2) {
         double y=(((x-x1)/(x2-x1))*(y2-y1))+y1;
@@ -198,7 +206,7 @@ public class desdifus
     private char Obtener_Etiqueta_Real_Sallida(double centroide) throws FileNotFoundException, IOException {
         char eti = 0; boolean ban=true;
         double x1, x2;
-        RandomAccessFile ar=new RandomAccessFile ("src/archivos/bin/Matriz_Modelo_Difuso.bin", "r");
+        RandomAccessFile ar=new RandomAccessFile ("src/archivos/bin/Modelo_Difuso.bin", "r");
         try{
             while (ban)
             {
@@ -224,7 +232,7 @@ public class desdifus
         char Etiqueta;
         double grado;
         String matrix [] = new String [10];
-        RandomAccessFile sal_dif=new RandomAccessFile ("src/archivos/bin/Salidas_difusas.bin", "rw");
+        RandomAccessFile sal_dif=new RandomAccessFile ("src/archivos/bin/entrada_desdifusificar.bin", "rw");
         String formato="";
        
         try
@@ -325,7 +333,7 @@ DEL PROGRAMA*/
         RandomAccessFile WriteInd;
         File Ind = null;
         
-        Ind = new File ("src/archivos/bin/Salidas_difusas.bin");
+        Ind = new File ("src/archivos/bin/entrada_desdifusificar.bin");
         WriteInd = new RandomAccessFile(Ind, "rw");
     
       for (int contador=0;contador<5;contador++)
@@ -365,7 +373,7 @@ DEL PROGRAMA*/
         RandomAccessFile WriteInd;
         File Ind = null;
         
-        Ind = new File ("Matriz_Modelo_Difuso.bin");
+        Ind = new File ("src/archivos/bin/Modelo_Difuso.bin");
         WriteInd = new RandomAccessFile(Ind, "rw");
     
       for (int contador=0;contador<5;contador++)
