@@ -39,7 +39,7 @@ public class desdifus
         RandomAccessFile sal_dif=new RandomAccessFile ("src/archivos/bin/Salidas_difusas.bin", "r");
         RandomAccessFile art=new RandomAccessFile ("src/archivos/bin/Matriz_Modelo_Difuso.bin", "r");
         
-        //FORMATO DEL ARCHIVO DE SALIDAS DIFUSAS--->SalidaDifusa
+        //FORMATO DEL ARCHIVO DE SALIDAS DIFUSAS--->Salidas_difusas
         
         //char 2 bytes
         //double 8 bytes       ------------char,duble.......char,double..............
