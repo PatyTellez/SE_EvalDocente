@@ -14,7 +14,11 @@ import javax.swing.JOptionPane;
 
 
 public class Motor {
-    public void leer_archivo() throws FileNotFoundException, IOException
+    
+    
+    ArrayList<EtiquetaDifusa> etiquetas;
+    int num_antecedentes;
+    void leer_archivo() throws FileNotFoundException, IOException
     {
         String acum="";
         RandomAccessFile var=new RandomAccessFile("Indice.bin", "r");
@@ -31,11 +35,13 @@ public class Motor {
         }catch(EOFException e){}
         
     }
-    public void difusificar() throws FileNotFoundException, IOException{
+    void difusificar() throws FileNotFoundException, IOException{
         File f = new File("Indice.txt");
         BufferedReader entrada;
         //RandomAccessFile indi=new RandomAccessFile("Indice.txt", "rws");
         String indicador="";
+        
+        
         
         try
         {
@@ -50,12 +56,12 @@ public class Motor {
     }
     
     //Difusificar Leyendo un ArrayList de Valores Reales
-    public void difusificar(ArrayList<ValorReal> entradas_reales) throws FileNotFoundException, IOException{
+    void difusificar(ArrayList<ValorReal> entradas_reales) throws FileNotFoundException, IOException{
         File f = new File("Indice.txt");
         BufferedReader entrada;
         //RandomAccessFile indi=new RandomAccessFile("Indice.txt", "rws");
         String indicador="";
-        
+        etiquetas = new ArrayList<EtiquetaDifusa>();
         ValorReal tmp;
         int i = 0;
         
@@ -71,6 +77,16 @@ public class Motor {
                 indicador="";
             }
         }catch (EOFException e){}
+        
+        /*for (int j = 0; j < etiquetas.size(); j++) 
+        {
+            System.out.println(etiquetas.get(j).getNombre()+" "+etiquetas.get(j).getValor());
+            
+        }*/
+        escribir_bin();
+        
+        
+        
     }
     
     
@@ -121,13 +137,13 @@ public class Motor {
                     String eti =modelos.readUTF();
 //                    eti+=modelos.readChar();
 //                    eti+=modelos.readChar();
-                    System.out.println("eti "+eti);
+                    //System.out.println("eti "+eti);
                     
                    inicio = modelos.readDouble();
                     m1 = modelos.readDouble();
                     m2 = modelos.readDouble();
                     fin = modelos.readDouble();
-                    System.out.println("Eti"+eti+" inicio "+inicio+" m1 "+m1+" m2 "+m2+" fin "+fin);
+                    //System.out.println("Eti"+eti+" inicio "+inicio+" m1 "+m1+" m2 "+m2+" fin "+fin);
                    comparar(inicio, m1, m2, fin, calificacion, eti, indicador, variabled);
                 }
               
@@ -152,7 +168,9 @@ public class Motor {
                 y2 = 1;
                 y1 = 0;
                 grados = (((x - x1) / (x2 - x1)) * (y2 - y1)) + y1;
-                System.out.println("Grados "+grados);
+                //System.out.println("Grados "+grados);
+                etiquetas.add(new EtiquetaDifusa(eti,grados));
+                //System.out.println(eti+" "+grados);
                 variabled.writeChars(eti);
                 variabled.writeDouble(grados);
             } else if (x >= m1 && x <= m2) {
@@ -161,7 +179,8 @@ public class Motor {
                 y2 = 1;
                 y1 = 1;
                 grados = (((x - x1) / (x2 - x1)) * (y2 - y1)) + y1;
-                System.out.println("Grados "+grados);
+                etiquetas.add(new EtiquetaDifusa(eti,grados));
+                //System.out.println(eti+" "+grados);
                 variabled.writeChars(eti);
                 variabled.writeDouble(grados);
             } else if (x >= m2 && x <= fin) {
@@ -170,13 +189,16 @@ public class Motor {
                 y2 = 1;
                 y1 = 0;
                 grados = (((x - x1) / (x2 - x1)) * (y2 - y1)) + y1;
-                System.out.println("Grados "+grados);
+                etiquetas.add(new EtiquetaDifusa(eti,grados));
+                //System.out.println(eti+" "+grados);
                 variabled.writeChars(eti);
                 variabled.writeDouble(grados);
             }
         } else {
-            System.out.println("Grados es 0.0");
+            
             grados=0.0;
+            etiquetas.add(new EtiquetaDifusa(eti,grados));
+            //System.out.println(eti+" "+grados);
             variabled.writeChars(eti);
             variabled.writeDouble(grados);
             //Grado de membresia es 0 directo
@@ -259,5 +281,65 @@ public class Motor {
 		}
            return entradas;
     }
+     
+     
+     void escribir_bin() throws FileNotFoundException, IOException {
+        
+        //Archivo txt con FAM completa  
+        File texto = new File("./src/archivos/txt/FAM.txt");
+        FileReader fileR = new FileReader(texto);
+        BufferedReader bufferR = new BufferedReader(fileR);
+
+        //Archivo binario de antecedentes 
+        RandomAccessFile fama = new RandomAccessFile("./src/archivos/bin/FAMA", "rw");
+        //Archivos binarios de consecuente
+        RandomAccessFile famc = new RandomAccessFile("./src/archivos/bin/FAMC", "rw");
+
+        fama.setLength(0);
+        
+        String aux = "";
+        StringTokenizer tokens;
+        int llave = 0;//llave en antecedentes que indica el registro del consecuente
+         System.out.println("Escribiendo archivos...");
+        while ((aux = bufferR.readLine()) != null) {
+            System.out.println(aux);
+            tokens = new StringTokenizer(aux, " ");
+            num_antecedentes=tokens.countTokens()-1; //La ultima etiqueta es el consecuente
+
+            for (int i = 0; i < num_antecedentes; i++) {
+                //Escribe antecedentes
+                fama.writeInt(llave);//campo llave
+                
+                System.out.print(llave+" ");
+                
+                String tmp = tokens.nextToken();
+                fama.writeUTF(tmp);//Etiqueta
+                System.out.print(tmp+" ");
+                double tmp_d = 0.0;
+                for (int j = 0; j < etiquetas.size(); j++) {
+                    
+                    if(tmp.equals(etiquetas.get(j).getNombre()))
+                    {
+                        tmp_d = etiquetas.get(j).getValor();
+                        System.out.println(tmp_d);
+                    }
+                }
+                
+                
+                fama.writeDouble(tmp_d);//Valor obtenido en difusificacion
+            }
+            
+            //Escribe consecuente
+             famc.writeUTF(tokens.nextToken());//Etiqueta
+             famc.writeDouble(0.0);//valor obtenido de la inferencia (min)
+            
+            llave++;
+
+        }
+        fileR.close();
+        fama.close();
+        famc.close();
+    }
+    
     
 }

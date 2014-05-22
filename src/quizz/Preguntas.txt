@@ -10,3 +10,4 @@ Evalúa del  1 al 5, la habilidad del profesor para escuchar opiniones referente
 Evalúa del  1 al 5, en que grado el profesor basaba sus clases y actividades en valores
 Evalúa del  1 al 5, la manera en que  profesor propicia un ambiente de respeto y confianza
 Evalúa del  1 al 5, en que grado el profesor te motivó a seguir aprendiendo
+Evalúa del  1 al 5, Indica el nivel de aportación para el desarrollo de nuevas competencias en tu formación
