@@ -61,7 +61,7 @@ public void Max_gm() throws FileNotFoundException, IOException{
         escribir_entrada_desdi.writeUTF(ConjuntosDif[i]);
         escribir_entrada_desdi.writeDouble(gm);//Escribe el grado de membresia maximo en entrada_desdifusificacion.bin
         
-        //System.out.println(ConjuntosDif[i]+" : "+gm);
+        System.out.println(ConjuntosDif[i]+" : "+gm);
         leer_famc.seek(0);
       }
 

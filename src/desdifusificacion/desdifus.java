@@ -141,8 +141,8 @@ public class desdifus
         if( Double.isNaN(centroide) )
         {
             System.out.println("VALOR REAL DE SALIDA = 0");
-            System.out.println("ETIQUETA DE SALIDA = ");
-            JOptionPane.showMessageDialog(null, "VALOR REAL DE SALIDA = 0\nNo Merece ser Nombrado Profesor" );
+           // System.out.println("ETIQUETA DE SALIDA = ");
+          //  JOptionPane.showMessageDialog(null, "VALOR REAL DE SALIDA = 0\nNo Merece ser Nombrado Profesor" );
         }
         else
         {
@@ -162,7 +162,7 @@ public class desdifus
                 case 'E': Salida="Excelente";
                     break;                
             }
-            JOptionPane.showMessageDialog(null, "VALOR REAL DE SALIDA = "+centroide+"\nProfesor: "+Salida );
+            JOptionPane.showMessageDialog(null,"Gracias por su evaluacion.!!!!!!!" );
             
             
             
