@@ -38,7 +38,7 @@ public class Difusificar {
             tokens = new StringTokenizer(aux, " ");
 
             //abre el modelo difuso conrrespondiente a la categoria
-            modeloDifuso =  new RandomAccessFile("./src/archivos/bin/"+tokens.nextToken()+"modelodifuso.bin", "w");
+            modeloDifuso =  new RandomAccessFile("./src/archivos/bin/"+tokens.nextToken()+"modelodifuso.bin", "rw");
            while (modeloDifuso.getFilePointer() != modeloDifuso.length()){
             etiqueta = modeloDifuso.readUTF();
             a=modeloDifuso.readDouble();
@@ -56,14 +56,12 @@ public class Difusificar {
     void actualizarFAMA(String etiqueta,double valor) throws FileNotFoundException, IOException{
     RandomAccessFile archi=new RandomAccessFile("./src/archivos/bin/FAMA","rw");
     String etiqueta_buscada;
-    long tam_reg;
-    char aux2;
-     
+        
     while(archi.getFilePointer()!=archi.length()){
         archi.readInt();
         etiqueta_buscada = archi.readUTF();        
         if(etiqueta_buscada.equals(etiqueta)){
-             
+             archi.writeDouble(valor);
         }
     
     }
