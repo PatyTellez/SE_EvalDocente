@@ -1,7 +1,4 @@
 package quizz;
-import desdifusificacion.desdifus;
-import inferir.Archivos;
-import inferir.inferir;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -16,7 +13,6 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
-import modelosdifusos.Motor;
 import static quizz.PanelCuestionario.Preguntas;
 /** @author Edson Leon */
 public class Quizz extends JFrame
@@ -26,7 +22,6 @@ public class Quizz extends JFrame
     JMenu menu, submenu;
     JMenuItem menuItem;
     JTabbedPane Paneles = new JTabbedPane();
-     inferir i = new inferir(); 
     
     public Quizz()
     {
@@ -52,41 +47,6 @@ public class Quizz extends JFrame
             {
                  try {
                       generarArchivoDeEntradasParaDifusificar();
-                      
-       //////////////////////////////////////DIFUCIFICACION ///////////////////////
-      Motor m= new Motor();
-      m.difusificar( m.lee_entradas_reales("entradasReales.txt"));
-      /////////////////////////////////////////////////////////////////////////////
-      
-      
-      
-        ///////////////////////////////////INFERENCIA///////////////////////////////////////////////////              
-        inferir i = new inferir();  
-        i.Min_gm();//Elige el Minimo Grado de Membresia de los indicadores que conforma una regla en la FAM
-                  //Y ese minimo grado se reescribe en el grado de membresia del consecuente FAMC
-        i.DeterminarCD_C();//Determina el numero de conjuntos difusos y la etiqueta de ellos
-        i.Max_gm();//Obtiene el grado de membresia maximo de los conjuntos difusos consecuentes FAMC y reescribe el archivo modelo_c.binarito con este grado a cada etiqueta correspondiente
-      
-        Archivos a =new Archivos();
-        a.leer();
-        //a.Escribir_modeloc();
-        //a.Leer_modeloc();
-        i.Leer_Entrada_desdi();
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-        
-        
-        /////////////////////////////////////DESDIFUCIFICACION/////////////////
-           desdifus des = new desdifus ();  
-          // des.archivo();                     //se crea el archivo del modelo difuso esto solo se hace una vez
-         // des.archivo_modelo_difuso();
-            des.acomodar_etiquetas();
-            des.desdifuzificar();
-        ////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////    
-        
-        
-                      
-                      
                  } catch (IOException ex) {
                       Logger.getLogger(Quizz.class.getName()).log(Level.SEVERE, null, ex);
                  }
@@ -95,13 +55,6 @@ public class Quizz extends JFrame
                 ///////////////////////////////////////////////////////////////////////////////////////
                 //AGREGAR AQUÍ CÓDIGO PARA INFERIR, Y DESDIFUSIFICAR///////////////////////////////////
                 ///////////////////////////////////////////////////////////////////////////////////////
-            
-               
-       
-        
-        
-        
-            
             
         });
         menuItem.setAccelerator(KeyStroke.getKeyStroke(
@@ -169,12 +122,31 @@ public class Quizz extends JFrame
                FileWriter w = new FileWriter(new File("entradasReales.txt"));
                BufferedWriter bw = new BufferedWriter(w);
                
+               double dominio,planeacion,ambiente,impacto;
+               dominio = planeacion = ambiente = impacto = 0.0;
+               
+               
                for (int i = 0; i < Preguntas.CalifEst.length; i++) {
                       bw.write((i+1)+" "+Preguntas.CalifEst[i]+"\n");
+                      if(i==0 || i==2 || i==8 || i==10){dominio+=Preguntas.CalifEst[i];}
+                      else if(i==1 || i==3 || i==5){planeacion+=Preguntas.CalifEst[i];}
+                      else if(i==6 || i==7 || i==9 || i==11){ambiente+=Preguntas.CalifEst[i];}
+                      else if(i==4 || i==12){impacto+=Preguntas.CalifEst[i];}
                }
                
                bw.close();
                w.close();
+               
+                FileWriter w2 = new FileWriter(new File("PromedioIndicadores.txt"));
+               BufferedWriter bw2 = new BufferedWriter(w2);
+               
+               bw2.write("Dominio "+(dominio/4.0)+"\n");
+               bw2.write("Planeacion "+(planeacion/3.0)+"\n");
+               bw2.write("Ambiente "+(ambiente/4.0)+"\n");
+               bw2.write("Impacto "+(impacto/2.0)+"\n");
+               
+               bw2.close();
+               w2.close();
 
          
          
