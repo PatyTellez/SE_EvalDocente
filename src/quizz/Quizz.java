@@ -22,6 +22,7 @@ public class Quizz extends JFrame
     JMenu menu, submenu;
     JMenuItem menuItem;
     JTabbedPane Paneles = new JTabbedPane();
+    inferir i = new inferir(); 
     
     public Quizz()
     {
@@ -47,15 +48,34 @@ public class Quizz extends JFrame
             {
                  try {
                       generarArchivoDeEntradasParaDifusificar();
+
+                       //////////////////////////////////////DIFUCIFICACION ///////////////////////
+      Motor m= new Motor();
+      m.difusificar( m.lee_entradas_reales("entradasReales.txt"));
+      /////////////////////////////////////////////////////////////////////////////
+      
+      
+      
+        ///////////////////////////////////INFERENCIA///////////////////////////////////////////////////              
+        i.Realizar_Inferencia();
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        
+        /////////////////////////////////////DESDIFUCIFICACION/////////////////
+           desdifus des = new desdifus ();  
+          // des.archivo();                     //se crea el archivo del modelo difuso esto solo se hace una vez
+         // des.archivo_modelo_difuso();
+            des.acomodar_etiquetas();
+            des.desdifuzificar();
+        ////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////    
+        
                  } catch (IOException ex) {
                       Logger.getLogger(Quizz.class.getName()).log(Level.SEVERE, null, ex);
                  }
                                   
                  }
-                ///////////////////////////////////////////////////////////////////////////////////////
-                //AGREGAR AQUÍ CÓDIGO PARA INFERIR, Y DESDIFUSIFICAR///////////////////////////////////
-                ///////////////////////////////////////////////////////////////////////////////////////
-            
+                 
         });
         menuItem.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_2, ActionEvent.ALT_MASK));
