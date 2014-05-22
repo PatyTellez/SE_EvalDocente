@@ -1,4 +1,7 @@
 package quizz;
+import desdifusificacion.desdifus;
+import inferir.Archivos;
+import inferir.inferir;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -13,6 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import modelosdifusos.Motor;
 import static quizz.PanelCuestionario.Preguntas;
 /** @author Edson Leon */
 public class Quizz extends JFrame
@@ -22,6 +26,7 @@ public class Quizz extends JFrame
     JMenu menu, submenu;
     JMenuItem menuItem;
     JTabbedPane Paneles = new JTabbedPane();
+     inferir i = new inferir(); 
     
     public Quizz()
     {
@@ -47,6 +52,41 @@ public class Quizz extends JFrame
             {
                  try {
                       generarArchivoDeEntradasParaDifusificar();
+                      
+       //////////////////////////////////////DIFUCIFICACION ///////////////////////
+      Motor m= new Motor();
+      m.difusificar( m.lee_entradas_reales("entradasReales.txt"));
+      /////////////////////////////////////////////////////////////////////////////
+      
+      
+      
+        ///////////////////////////////////INFERENCIA///////////////////////////////////////////////////              
+        inferir i = new inferir();  
+        i.Min_gm();//Elige el Minimo Grado de Membresia de los indicadores que conforma una regla en la FAM
+                  //Y ese minimo grado se reescribe en el grado de membresia del consecuente FAMC
+        i.DeterminarCD_C();//Determina el numero de conjuntos difusos y la etiqueta de ellos
+        i.Max_gm();//Obtiene el grado de membresia maximo de los conjuntos difusos consecuentes FAMC y reescribe el archivo modelo_c.binarito con este grado a cada etiqueta correspondiente
+      
+        Archivos a =new Archivos();
+        a.leer();
+        //a.Escribir_modeloc();
+        //a.Leer_modeloc();
+        i.Leer_Entrada_desdi();
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        
+        /////////////////////////////////////DESDIFUCIFICACION/////////////////
+           desdifus des = new desdifus ();  
+          // des.archivo();                     //se crea el archivo del modelo difuso esto solo se hace una vez
+         // des.archivo_modelo_difuso();
+            des.acomodar_etiquetas();
+            des.desdifuzificar();
+        ////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////    
+        
+        
+                      
+                      
                  } catch (IOException ex) {
                       Logger.getLogger(Quizz.class.getName()).log(Level.SEVERE, null, ex);
                  }
@@ -55,6 +95,13 @@ public class Quizz extends JFrame
                 ///////////////////////////////////////////////////////////////////////////////////////
                 //AGREGAR AQUÍ CÓDIGO PARA INFERIR, Y DESDIFUSIFICAR///////////////////////////////////
                 ///////////////////////////////////////////////////////////////////////////////////////
+            
+               
+       
+        
+        
+        
+            
             
         });
         menuItem.setAccelerator(KeyStroke.getKeyStroke(

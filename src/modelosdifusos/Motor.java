@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 
 
 public class Motor {
-    void leer_archivo() throws FileNotFoundException, IOException
+    public void leer_archivo() throws FileNotFoundException, IOException
     {
         String acum="";
         RandomAccessFile var=new RandomAccessFile("Indice.bin", "r");
@@ -31,7 +31,7 @@ public class Motor {
         }catch(EOFException e){}
         
     }
-    void difusificar() throws FileNotFoundException, IOException{
+    public void difusificar() throws FileNotFoundException, IOException{
         File f = new File("Indice.txt");
         BufferedReader entrada;
         //RandomAccessFile indi=new RandomAccessFile("Indice.txt", "rws");
@@ -50,7 +50,7 @@ public class Motor {
     }
     
     //Difusificar Leyendo un ArrayList de Valores Reales
-    void difusificar(ArrayList<ValorReal> entradas_reales) throws FileNotFoundException, IOException{
+    public void difusificar(ArrayList<ValorReal> entradas_reales) throws FileNotFoundException, IOException{
         File f = new File("Indice.txt");
         BufferedReader entrada;
         //RandomAccessFile indi=new RandomAccessFile("Indice.txt", "rws");
