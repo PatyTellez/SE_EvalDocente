@@ -18,13 +18,14 @@ public class Modelosdifusos {
  
     public static void main(String[] args) throws FileNotFoundException, IOException {
         
-//        mod_dif md =new mod_dif();
+        mod_dif md =new mod_dif();
+        md.difusos_bin("salida");
 //        md.generar_indice();
 //        md.leer_indice();
 //        md.modelos_difusos();
         
-      Motor m= new Motor();
-      m.difusificar( m.lee_entradas_reales("entradasReales.txt"));
+//      Motor m= new Motor();
+//      m.difusificar( m.lee_entradas_reales("entradasReales.txt"));
        
     }
     

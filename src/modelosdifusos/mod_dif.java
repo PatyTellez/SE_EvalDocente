@@ -72,7 +72,7 @@ public class mod_dif {
               while(ban){
                   if (cadena!=null)
                   {
-                  System.out.println("cadena "+cadena);
+//                  System.out.println("cadena "+cadena);
                   StringTokenizer st=new StringTokenizer(cadena);
                   while (st.hasMoreTokens()){
                       String a=st.nextToken();
@@ -83,7 +83,7 @@ public class mod_dif {
                       bin.writeUTF(a);
                       bin.writeDouble(b);bin.writeDouble(c);
                       bin.writeDouble(d);bin.writeDouble(e);
-                      System.out.println("escritura bin "+a+" "+b+" "+c+" "+d+ " "+e);
+                      System.out.println(a+" "+b+" "+c+" "+d+ " "+e);
                       
                   }
                   cadena=txt.readLine();
