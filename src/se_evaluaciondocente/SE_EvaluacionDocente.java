@@ -13,12 +13,12 @@ public class SE_EvaluacionDocente {
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
         
-        /*
-        Escribir y leer FAMA y FAMC
+        
+       // Escribir y leer FAMA y FAMC
         RW_FAM fbin = new RW_FAM();
         fbin.escribir_bin();
         fbin.leer_bin();
-        */
+        
     }
     
 }

@@ -38,7 +38,7 @@ public class RW_FAM {
                 //Escribe antecedentes
                 fama.writeInt(llave);//campo llave
                 fama.writeUTF(tokens.nextToken());//Etiqueta
-                fama.writeDouble(0.0);//Valor obtenido en difusificacion
+                fama.writeDouble(Math.random()*1.0);//Valor obtenido en difusificacion
             }
             
             //Escribe consecuente
