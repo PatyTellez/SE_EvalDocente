@@ -1,4 +1,7 @@
 package quizz;
+import desdifusificacion.desdifus;
+import difusificar.Difusificar;
+import inferir.inferir;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -50,8 +53,7 @@ public class Quizz extends JFrame
                       generarArchivoDeEntradasParaDifusificar();
 
                        //////////////////////////////////////DIFUCIFICACION ///////////////////////
-      Motor m= new Motor();
-      m.difusificar( m.lee_entradas_reales("entradasReales.txt"));
+      Difusificar m= new Difusificar();
       /////////////////////////////////////////////////////////////////////////////
       
       

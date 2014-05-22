@@ -19,6 +19,12 @@ import java.util.StringTokenizer;
  * @author azul
  */
 public class Difusificar {
+
+     public Difusificar() throws FileNotFoundException, IOException {
+          this.inicio();
+     }
+     
+     
     
     void inicio()throws FileNotFoundException, IOException{
          //Archivo txt con promedios
