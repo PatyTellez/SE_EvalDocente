@@ -9,7 +9,7 @@ public class inferir {
     //private static final Archivos arc = new Archivos();
     private static String ConjuntosDif[];
     
-    public void Min_gm() throws FileNotFoundException, IOException {
+    static void Min_gm() throws FileNotFoundException, IOException {
         int llave = 0;
         String etiqueta = "";
 
@@ -39,7 +39,7 @@ public class inferir {
 
     }
     
-public void Max_gm() throws FileNotFoundException, IOException{
+static void Max_gm() throws FileNotFoundException, IOException{
         String etiqueta = "";
 
         RandomAccessFile leer_famc = new RandomAccessFile("src/archivos/bin/FAMC", "r");
@@ -61,7 +61,7 @@ public void Max_gm() throws FileNotFoundException, IOException{
         escribir_entrada_desdi.writeUTF(ConjuntosDif[i]);
         escribir_entrada_desdi.writeDouble(gm);//Escribe el grado de membresia maximo en entrada_desdifusificacion.bin
         
-        System.out.println(ConjuntosDif[i]+" : "+gm);
+        //System.out.println(ConjuntosDif[i]+" : "+gm);
         leer_famc.seek(0);
       }
 
@@ -69,7 +69,7 @@ public void Max_gm() throws FileNotFoundException, IOException{
         leer_famc.close();
     }
 
-public void DeterminarCD_C() throws FileNotFoundException, IOException{//Metodo para determinar el numero de conjuntos difusos (etiquetas) en el archivo modelo_c.binarito
+static void DeterminarCD_C() throws FileNotFoundException, IOException{//Metodo para determinar el numero de conjuntos difusos (etiquetas) en el archivo modelo_c.binarito
    
     String etiquetas="";
     
@@ -94,7 +94,7 @@ public void DeterminarCD_C() throws FileNotFoundException, IOException{//Metodo 
     
 }
 
-public void Leer_Entrada_desdi() throws FileNotFoundException, IOException{
+static void Leer_Entrada_desdi() throws FileNotFoundException, IOException{
     
     RandomAccessFile leer_entrada_desdi = new RandomAccessFile("src/archivos/bin/entrada_desdifusificar.bin", "r");
             
@@ -109,20 +109,21 @@ public void Leer_Entrada_desdi() throws FileNotFoundException, IOException{
         
 }
   
-    public static void main(String[] args) throws IOException {
-        
-        inferir i = new inferir();  
-        i.Min_gm();//Elige el Minimo Grado de Membresia de los indicadores que conforma una regla en la FAM
+    public  void Realizar_Inferencia() throws IOException {
+         Archivos a =new Archivos();
+         a.Escribir_entrada_desdifusificar();
+       // inferir i = new inferir();  
+        Min_gm();//Elige el Minimo Grado de Membresia de los indicadores que conforma una regla en la FAM
                   //Y ese minimo grado se reescribe en el grado de membresia del consecuente FAMC
-        i.DeterminarCD_C();//Determina el numero de conjuntos difusos y la etiqueta de ellos
-        i.Max_gm();//Obtiene el grado de membresia maximo de los conjuntos difusos consecuentes FAMC y reescribe el archivo modelo_c.binarito con este grado a cada etiqueta correspondiente
+        DeterminarCD_C();//Determina el numero de conjuntos difusos y la etiqueta de ellos
+        Max_gm();//Obtiene el grado de membresia maximo de los conjuntos difusos consecuentes FAMC y reescribe el archivo modelo_c.binarito con este grado a cada etiqueta correspondiente
       
-        Archivos a =new Archivos();
+       
         a.leer();
         //a.Escribir_modeloc();
         //a.Leer_modeloc();
         
-        i.Leer_Entrada_desdi();
+        Leer_Entrada_desdi();
       
     }
     

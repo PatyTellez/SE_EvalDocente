@@ -3,7 +3,57 @@ package inferir;
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class Archivos {    
+public class Archivos {
+    
+    int conta = 0, reg_difuso = 0;
+    
+    public void get_tamaño_reg() throws FileNotFoundException, IOException{
+        
+        RandomAccessFile fama = new RandomAccessFile("src/archivos/bin/FAMA", "r");
+        
+        fama.readInt();//LLave
+        fama.readUTF();//etiqueta
+        fama.readDouble();//grado
+        
+        reg_difuso=(int)fama.getFilePointer();
+        
+        fama.close();
+    }       
+
+    public void escribir_A() throws FileNotFoundException, IOException {
+        conta = 0;
+        int indicador = 0;
+        String etiqueta = "", aux = "";
+        boolean ban = true;
+        
+        this.get_tamaño_reg();
+
+        RandomAccessFile fama = new RandomAccessFile("src/archivos/bin/FAMA", "rw");
+        RandomAccessFile entrada_difusa = new RandomAccessFile("src/archivos/bin/entrada_desdifusificar.bin", "r");
+
+        while (fama.getFilePointer() < fama.length()) {
+            ban = true;
+            fama.readInt();
+            
+            etiqueta = fama.readUTF();
+
+            entrada_difusa.seek((indicador-1) * reg_difuso);
+
+            while (ban && entrada_difusa.getFilePointer() != (reg_difuso * indicador)) {
+                aux = entrada_difusa.readUTF();
+                
+                if (aux.equals(etiqueta)) {
+                    fama.writeDouble(entrada_difusa.readDouble());
+                    ban = false;                    
+                } else {                    
+                    entrada_difusa.readDouble();
+                }
+            }           
+        }
+
+        fama.close();
+        entrada_difusa.close();
+    }
     
     public static void leer() throws FileNotFoundException, IOException {
         int llave = 0;
@@ -33,7 +83,7 @@ public class Archivos {
 
     }
     
-    public static void Escribir_entrada_desdifusificar() throws FileNotFoundException, IOException{
+    public  void Escribir_entrada_desdifusificar() throws FileNotFoundException, IOException{
         
         File texto = new File("src/archivos/txt/entrada_desdifusificar.txt");
         FileReader fileR = new FileReader(texto);
