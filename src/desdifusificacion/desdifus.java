@@ -61,7 +61,7 @@ public class desdifus
                aux+=" "+grado;
                leer_Etiqueta+=art.readChar(); 
                
-               System.out.println(aux);
+               //System.out.println(aux);
                aux="";
                
                x1=art.readDouble();             
@@ -140,28 +140,43 @@ public class desdifus
    {
         if( Double.isNaN(centroide) )
         {
-            System.out.println("VALOR REAL DE SALIDA = 0");
+             escribir_archi_calf_profe(0,"Pesimo");
+           // System.out.println("VALOR REAL DE SALIDA = 0");
            // System.out.println("ETIQUETA DE SALIDA = ");
           //  JOptionPane.showMessageDialog(null, "VALOR REAL DE SALIDA = 0\nNo Merece ser Nombrado Profesor" );
         }
         else
         {
-            System.out.println("VALOR REAL DE SALIDA = "+centroide);
-            System.out.println("ETIQUETA DE SALIDA = "+Etiqueta_salida);
+//            System.out.println("VALOR REAL DE SALIDA = "+centroide);
+//            System.out.println("ETIQUETA DE SALIDA = "+Etiqueta_salida);
             String Salida="";
             switch(Etiqueta_salida)
             {
-                case 'P': Salida="Pesimo";
+                case 'P': Salida="NO SUFICIENTE";
                     break;
-                case 'M': Salida="Malo";
+                case 'M': Salida="SUFICIENTE";
                     break;
-                case 'R': Salida="Regular";
+                case 'R': Salida="BUENO";
                     break;
-                case 'B': Salida="Bueno";
+                case 'B': Salida="NOTABLE";
                     break;
                 case 'E': Salida="Excelente";
                     break;                
             }
+            
+             escribir_archi_calf_profe(centroide,Salida);
+            
+        }
+   }
+   
+   
+   
+   void escribir_archi_calf_profe(double centroide,   String Etiqueta_salida)
+   {
+       
+            System.out.println("Calificacion del profesor = "+centroide);
+            System.out.println("ETIQUETA DE SALIDA = "+Etiqueta_salida);
+            
             JOptionPane.showMessageDialog(null,"Gracias por su evaluacion.!!!!!!!" );
             
             
@@ -181,7 +196,7 @@ public class desdifus
              
              FileWriter escribir = new FileWriter(archivo2,true);
              
-                       escribir.write("Calificacion del profesor = "+centroide+"  El Profesor es : "+Salida+"\n");
+                       escribir.write("Calificacion del profesor = "+centroide+"  El Profesor es : "+Etiqueta_salida+"\n");
                        
               //Cerramos la conexion
                 escribir.close();
@@ -193,9 +208,6 @@ public class desdifus
              {
              System.out.println("Error al escribir");
              } 
-            
-            
-        }
    }
   // ----------------------------------------------------------------------------------------------------------------------
   // ----------------------------------------------------------------------------------------------------------------------
@@ -357,11 +369,18 @@ DEL PROGRAMA*/
     //ESTO PARA FINES DE PRUEBA DEL SISTEMA
     public void archivo_modelo_difuso () throws IOException
     {
+//        char etiquetas []={'P','M','R','B','E'};
+//        double p1 []={0.0,   20.0,  55.0,  77.5,93.2};
+//        double p2 []={0.1,   30.0,  70.0,  85.0,95.0};
+//        double p3 []={15.0,  50.0,  70.0,  90.0,100.0};
+//        double p4 []={25.0,  60.0,  85.0,  97.0,100.0};
+        
         char etiquetas []={'P','M','R','B','E'};
-        double p1 []={0.0,   20.0,  55.0,  77.5,93.2};
-        double p2 []={0.1,   30.0,  70.0,  85.0,95.0};
-        double p3 []={15.0,  50.0,  70.0,  90.0,100.0};
-        double p4 []={25.0,  60.0,  85.0,  97.0,100.0};
+        double p1 []={0.0,   1.0,  2.75,  3.8,4.6};
+        double p2 []={0.005,   1.5,  3.5,  4.25,4.7};
+        double p3 []={0.75,  2.5,  3.5,  4.5,5.0};
+        double p4 []={1.25,  3.0,  4.25,  4.8,5.0};
+       
        
         char a;
         double b;
