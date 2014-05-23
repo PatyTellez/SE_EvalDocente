@@ -27,7 +27,7 @@ public class mod_dif {
    while (cad!=null){
        indbin.writeUTF(cad);
        if (cad!=null){
-       RandomAccessFile md=new RandomAccessFile(cad+"modelodifuso.txt", "rw");
+       RandomAccessFile md=new RandomAccessFile("src/archivos/txt/"+cad+"modelodifuso.txt", "rw");
        cad=indtxt.readLine();
        md.close();
 //       System.out.println(cad);
@@ -63,8 +63,8 @@ public class mod_dif {
     }
 
      void difusos_bin(String cad) throws FileNotFoundException, IOException {
-          RandomAccessFile txt=new RandomAccessFile(cad+"modelodifuso.txt","r");
-          RandomAccessFile bin=new RandomAccessFile(cad+"modelodifuso.bin","rw");
+          RandomAccessFile txt=new RandomAccessFile("src/archivos/txt/"+cad+"modelodifuso.txt","r");
+          RandomAccessFile bin=new RandomAccessFile("src/archivos/bin/"+cad+"modelodifuso.bin","rw");
           String cadena=txt.readLine();
           
           try{

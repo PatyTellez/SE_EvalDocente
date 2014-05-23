@@ -1,1 +1,1 @@
-Calificacion del profesor = 10.233834586464486  El Profesor es : Pesimo
+Calificacion del profesor = 97.02686671188461  El Profesor es : Excelente
