@@ -61,7 +61,7 @@ public class desdifus
                aux+=" "+grado;
                leer_Etiqueta+=art.readChar(); 
                
-               System.out.println(aux);
+               //System.out.println(aux);
                aux="";
                
                x1=art.readDouble();             
