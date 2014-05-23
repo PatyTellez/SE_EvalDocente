@@ -357,11 +357,18 @@ DEL PROGRAMA*/
     //ESTO PARA FINES DE PRUEBA DEL SISTEMA
     public void archivo_modelo_difuso () throws IOException
     {
+//        char etiquetas []={'P','M','R','B','E'};
+//        double p1 []={0.0,   20.0,  55.0,  77.5,93.2};
+//        double p2 []={0.1,   30.0,  70.0,  85.0,95.0};
+//        double p3 []={15.0,  50.0,  70.0,  90.0,100.0};
+//        double p4 []={25.0,  60.0,  85.0,  97.0,100.0};
+        
         char etiquetas []={'P','M','R','B','E'};
-        double p1 []={0.0,   20.0,  55.0,  77.5,93.2};
-        double p2 []={0.1,   30.0,  70.0,  85.0,95.0};
-        double p3 []={15.0,  50.0,  70.0,  90.0,100.0};
-        double p4 []={25.0,  60.0,  85.0,  97.0,100.0};
+        double p1 []={0.0,   1.0,  2.75,  3.8,4.6};
+        double p2 []={0.005,   1.5,  3.5,  4.25,4.7};
+        double p3 []={0.75,  2.5,  3.5,  4.5,5.0};
+        double p4 []={1.25,  3.0,  4.25,  4.8,5.0};
+       
        
         char a;
         double b;

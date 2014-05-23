@@ -1,1 +1,1 @@
-Calificacion del profesor = 53.75032899858639  El Profesor es : Malo
+Calificacion del profesor = 4.804707317073202  El Profesor es : Excelente

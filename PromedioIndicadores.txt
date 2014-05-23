@@ -1,4 +1,4 @@
-Dominio 5.0
-Planeacion 5.0
-Ambiente 5.0
-Impacto 5.0
+Dominio 1.0
+Planeacion 1.0
+Ambiente 1.0
+Impacto 3.0

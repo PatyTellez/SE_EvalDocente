@@ -30,7 +30,6 @@ public class RW_FAM {
         int llave = 0;//llave en antecedentes que indica el registro del consecuente
 
         while ((aux = bufferR.readLine()) != null) {
-            System.out.println(aux);
             tokens = new StringTokenizer(aux, " ");
             num_antecedentes=tokens.countTokens()-1; //La ultima etiqueta es el consecuente
 
@@ -38,7 +37,7 @@ public class RW_FAM {
                 //Escribe antecedentes
                 fama.writeInt(llave);//campo llave
                 fama.writeUTF(tokens.nextToken());//Etiqueta
-                fama.writeDouble(Math.random()*1.0);//Valor obtenido en difusificacion
+                fama.writeDouble(0.0);//Valor obtenido en difusificacion
             }
             
             //Escribe consecuente
