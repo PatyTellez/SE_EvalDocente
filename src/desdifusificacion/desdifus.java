@@ -46,7 +46,7 @@ public class desdifus
         //double 8 bytes       ------------char,duble.......char,double..............
         
         boolean ban=true;
-        char Etiqueta;
+        String Etiqueta;
         double grado, x1, x2, x3, x4;
         double y, y1, y2, xt, x, mui, mult, acum=0, acumy=0;
         try
@@ -55,7 +55,7 @@ public class desdifus
            System.out.println("-----------------DESDIFUZIFICANDO---------------------------");
            while (ban)
            {
-               Etiqueta=sal_dif.readChar();         //-----leer la etiqueta
+               Etiqueta=sal_dif.readUTF();         //-----leer la etiqueta
                aux+=" "+Etiqueta;
                grado=sal_dif.readDouble();     //-----leer valor de la etiqueta
                aux+=" "+grado;
