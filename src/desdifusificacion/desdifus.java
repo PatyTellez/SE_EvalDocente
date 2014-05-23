@@ -140,28 +140,43 @@ public class desdifus
    {
         if( Double.isNaN(centroide) )
         {
-            System.out.println("VALOR REAL DE SALIDA = 0");
+             escribir_archi_calf_profe(0,"Pesimo");
+           // System.out.println("VALOR REAL DE SALIDA = 0");
            // System.out.println("ETIQUETA DE SALIDA = ");
           //  JOptionPane.showMessageDialog(null, "VALOR REAL DE SALIDA = 0\nNo Merece ser Nombrado Profesor" );
         }
         else
         {
-            System.out.println("VALOR REAL DE SALIDA = "+centroide);
-            System.out.println("ETIQUETA DE SALIDA = "+Etiqueta_salida);
+//            System.out.println("VALOR REAL DE SALIDA = "+centroide);
+//            System.out.println("ETIQUETA DE SALIDA = "+Etiqueta_salida);
             String Salida="";
             switch(Etiqueta_salida)
             {
-                case 'P': Salida="Pesimo";
+                case 'P': Salida="NO SUFICIENTE";
                     break;
-                case 'M': Salida="Malo";
+                case 'M': Salida="SUFICIENTE";
                     break;
-                case 'R': Salida="Regular";
+                case 'R': Salida="BUENO";
                     break;
-                case 'B': Salida="Bueno";
+                case 'B': Salida="NOTABLE";
                     break;
                 case 'E': Salida="Excelente";
                     break;                
             }
+            
+             escribir_archi_calf_profe(centroide,Salida);
+            
+        }
+   }
+   
+   
+   
+   void escribir_archi_calf_profe(double centroide,   String Etiqueta_salida)
+   {
+       
+            System.out.println("Calificacion del profesor = "+centroide);
+            System.out.println("ETIQUETA DE SALIDA = "+Etiqueta_salida);
+            
             JOptionPane.showMessageDialog(null,"Gracias por su evaluacion.!!!!!!!" );
             
             
@@ -181,7 +196,7 @@ public class desdifus
              
              FileWriter escribir = new FileWriter(archivo2,true);
              
-                       escribir.write("Calificacion del profesor = "+centroide+"  El Profesor es : "+Salida+"\n");
+                       escribir.write("Calificacion del profesor = "+centroide+"  El Profesor es : "+Etiqueta_salida+"\n");
                        
               //Cerramos la conexion
                 escribir.close();
@@ -193,9 +208,6 @@ public class desdifus
              {
              System.out.println("Error al escribir");
              } 
-            
-            
-        }
    }
   // ----------------------------------------------------------------------------------------------------------------------
   // ----------------------------------------------------------------------------------------------------------------------
