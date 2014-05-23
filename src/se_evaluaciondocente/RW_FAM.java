@@ -30,7 +30,6 @@ public class RW_FAM {
         int llave = 0;//llave en antecedentes que indica el registro del consecuente
 
         while ((aux = bufferR.readLine()) != null) {
-            System.out.println(aux);
             tokens = new StringTokenizer(aux, " ");
             num_antecedentes=tokens.countTokens()-1; //La ultima etiqueta es el consecuente
 
