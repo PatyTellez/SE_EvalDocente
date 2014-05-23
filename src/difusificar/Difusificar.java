@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package difusificar;
 
 import java.io.BufferedReader;
@@ -14,10 +8,6 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.StringTokenizer;
 
-/**
- *
- * @author azul
- */
 public class Difusificar {
 
      public Difusificar() throws FileNotFoundException, IOException {
@@ -28,7 +18,7 @@ public class Difusificar {
     
     void inicio()throws FileNotFoundException, IOException{
          //Archivo txt con promedios
-        File texto = new File("entradasReales.txt");
+        File texto = new File("PromedioIndicadores.txt");
         FileReader fileR = new FileReader(texto);
         BufferedReader bufferR = new BufferedReader(fileR);
         
@@ -37,7 +27,7 @@ public class Difusificar {
         
         String aux = "",etiqueta;
         StringTokenizer tokens;
-        double a,b,c,d;
+        double a,b,c,d,variable_difusa,entrada;
 
         while ((aux = bufferR.readLine()) != null) {
             System.out.println(aux);
@@ -45,15 +35,16 @@ public class Difusificar {
 
             //abre el modelo difuso conrrespondiente a la categoria
             modeloDifuso =  new RandomAccessFile("./src/archivos/bin/"+tokens.nextToken()+"modelodifuso.bin", "rw");
+            entrada=Double.parseDouble(tokens.nextToken());//entrada real
            while (modeloDifuso.getFilePointer() != modeloDifuso.length()){
             etiqueta = modeloDifuso.readUTF();
             a=modeloDifuso.readDouble();
             b=modeloDifuso.readDouble();
             c=modeloDifuso.readDouble();
-            d=modeloDifuso.readDouble();
-            
-            actualizarFAMA(etiqueta,Trapezoidal(a,b,c,d,Double.parseDouble(tokens.nextToken())));
-
+            d=modeloDifuso.readDouble();           
+            variable_difusa=Trapezoidal(a,b,c,d,entrada);
+            System.out.println("etiqueta "+ etiqueta+" variable difusa "+variable_difusa+"\n");
+            actualizarFAMA(etiqueta,variable_difusa);
            }
         }
         
@@ -64,11 +55,12 @@ public class Difusificar {
     String etiqueta_buscada;
         
     while(archi.getFilePointer()!=archi.length()){
-        archi.readInt();
-        etiqueta_buscada = archi.readUTF();        
-        if(etiqueta_buscada.equals(etiqueta)){
+        archi.readInt();;
+        etiqueta_buscada = archi.readUTF();
+        if(etiqueta.equals(etiqueta_buscada)){
              archi.writeDouble(valor);
-        }
+        }else
+            archi.readDouble();
     
     }
    }
@@ -91,9 +83,7 @@ public class Difusificar {
         
         if(variable>d)       
            resultado=0; 
-      
-
+ 
             return resultado;
-    }
-    
+    }    
 }
