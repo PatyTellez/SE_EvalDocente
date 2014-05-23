@@ -1,1 +1,6 @@
 Calificacion del profesor = 4.823557939914231  El Profesor es : Excelente
+<<<<<<< HEAD
+=======
+Calificacion del profesor = 3.500000000000006  El Profesor es : BUENO
+>>>>>>> ca47944a8099a1d5ea29bc2f15cde47efac408d4
+Calificacion del profesor = 4.823557939914231  El Profesor es : Excelente
