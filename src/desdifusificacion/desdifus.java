@@ -39,7 +39,8 @@ public class desdifus
         
         RandomAccessFile sal_dif=new RandomAccessFile ("src/archivos/bin/entrada_desdifusificar.bin", "r");
         RandomAccessFile art=new RandomAccessFile ("src/archivos/bin/Modelo_Difuso.bin", "r");
-        
+        // RandomAccessFile art=new RandomAccessFile ("src/archivos/bin/Planeacionmodelodifuso.bin", "r");
+         
         //FORMATO DEL ARCHIVO DE SALIDAS DIFUSAS--->Salidas_difusas
         
         //char 2 bytes
@@ -59,7 +60,8 @@ public class desdifus
                aux+=" "+Etiqueta;
                grado=sal_dif.readDouble();     //-----leer valor de la etiqueta
                aux+=" "+grado;
-               leer_Etiqueta+=art.readChar(); 
+               leer_Etiqueta+=art.readChar();
+              // leer_Etiqueta+=art.readUTF();
                
                //System.out.println(aux);
                aux="";
@@ -68,6 +70,8 @@ public class desdifus
                x2=art.readDouble();              
                x3=art.readDouble();             
                x4=art.readDouble();
+               
+               System.out.println(+x1+" "+x2+" "+x3+" "+x4);
               
                leer_Etiqueta="";
                y=grado;
@@ -376,10 +380,10 @@ DEL PROGRAMA*/
 //        double p4 []={25.0,  60.0,  85.0,  97.0,100.0};
         
         char etiquetas []={'P','M','R','B','E'};
-        double p1 []={0.0,   1.0,  2.75,  3.8,4.6};
-        double p2 []={0.005,   1.5,  3.5,  4.25,4.7};
-        double p3 []={0.75,  2.5,  3.5,  4.5,5.0};
-        double p4 []={1.25,  3.0,  4.25,  4.8,5.0};
+        double p1 []={0.0,   1.0,  2.75,  3.85,4.65};
+        double p2 []={0.005,   1.5,  3.5,  4.25,4.75};
+        double p3 []={0.005,  2.5,  3.5,  4.5,5.0};
+        double p4 []={1.25,  3.0,  4.0,  4.85,5.0};
        
        
         char a;

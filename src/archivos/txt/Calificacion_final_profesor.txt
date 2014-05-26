@@ -1,2 +1,13 @@
 Calificacion del profesor = 4.823557939914231  El Profesor es : Excelente
 Calificacion del profesor = 3.500000000000006  El Profesor es : BUENO
+Calificacion del profesor = 0.0  El Profesor es : Pesimo
+Calificacion del profesor = 0.0  El Profesor es : Pesimo
+Calificacion del profesor = 4.848358931552648  El Profesor es : NOTABLE
+Calificacion del profesor = 4.848358931552648  El Profesor es : NOTABLE
+Calificacion del profesor = 4.848358931552648  El Profesor es : NOTABLE
+Calificacion del profesor = 4.848358931552648  El Profesor es : NOTABLE
+Calificacion del profesor = 0.0  El Profesor es : Pesimo
+Calificacion del profesor = 0.0  El Profesor es : Pesimo
+Calificacion del profesor = 3.3944441634842693  El Profesor es : BUENO
+Calificacion del profesor = 4.848358931552648  El Profesor es : 
+Calificacion del profesor = 4.848358931552648  El Profesor es : NOTABLE
