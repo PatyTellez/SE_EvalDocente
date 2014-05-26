@@ -71,9 +71,10 @@ public class desdifus
                x3=art.readDouble();             
                x4=art.readDouble();
                
-               System.out.println(+x1+" "+x2+" "+x3+" "+x4);
+               //System.out.println(+x1+" "+x2+" "+x3+" "+x4);
               
                leer_Etiqueta="";
+               
                y=grado;
                y1=0;
                y2=1;
