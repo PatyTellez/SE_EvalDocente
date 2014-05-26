@@ -64,19 +64,11 @@ public class Quizz extends JFrame
         
         
         /////////////////////////////////////DESDIFUCIFICACION/////////////////
-           desdifus des = new desdifus ();  
-<<<<<<< HEAD
+           desdifus des = new desdifus ();   
           // des.archivo();                     //se crea el archivo del modelo difuso esto solo se hace una vez
-          des.archivo_modelo_difuso();
+          // des.archivo_modelo_difuso();
           //  des.acomodar_etiquetas();
-=======
-          // des.archivo();                     //se crea el archivo del modelo difuso esto solo se hace una vez<<<<<<< HEAD
-         // des.archivo_modelo_difuso();
-//            des.acomodar_etiquetas();=======
-          //des.archivo_modelo_difuso();
-          //  des.acomodar_etiquetas();>>>>>>> ecdb6b10548aae1d22f1a4f165bcee0339970eaf
->>>>>>> 183e4365169cd294c28d683c2c3600e488937221
-            des.desdifuzificar();
+          des.desdifuzificar(); 
         ////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////    
         

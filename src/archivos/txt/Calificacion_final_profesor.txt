@@ -20,3 +20,4 @@ Calificacion del profesor = 4.823557939914231  El Profesor es : Excelente
 Calificacion del profesor = 2.000000000000039  El Profesor es : SUFICIENTE
 Calificacion del profesor = 0.6005973322217796  El Profesor es : NO SUFICIENTE
 >>>>>>> 183e4365169cd294c28d683c2c3600e488937221
+Calificacion del profesor = 4.848358931552648  El Profesor es : NOTABLE

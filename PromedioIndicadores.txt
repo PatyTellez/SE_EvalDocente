@@ -1,11 +1,4 @@
-<<<<<<< HEAD
 Dominio 5.0
 Planeacion 5.0
 Ambiente 5.0
 Impacto 5.0
-=======
-Dominio 1.0
-Planeacion 1.0
-Ambiente 1.0
-Impacto 1.0
->>>>>>> 183e4365169cd294c28d683c2c3600e488937221
