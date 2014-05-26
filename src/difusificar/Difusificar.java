@@ -34,7 +34,9 @@ public class Difusificar {
             tokens = new StringTokenizer(aux, " ");
 
             //abre el modelo difuso conrrespondiente a la categoria
-            modeloDifuso =  new RandomAccessFile("./src/archivos/bin/"+tokens.nextToken()+"modelodifuso.bin", "rw");
+           String ch=tokens.nextToken();
+            System.out.println("ch "+ch);
+            modeloDifuso =  new RandomAccessFile("./src/archivos/bin/"+ch+"modelodifuso.bin", "rw");
             entrada=Double.parseDouble(tokens.nextToken());//entrada real
            while (modeloDifuso.getFilePointer() != modeloDifuso.length()){
             etiqueta = modeloDifuso.readUTF();

@@ -1,5 +1,8 @@
 Calificacion del profesor = 4.823557939914231  El Profesor es : Excelente
+<<<<<<< HEAD
+=======
 Calificacion del profesor = 3.500000000000006  El Profesor es : BUENO
+<<<<<<< HEAD
 Calificacion del profesor = 0.0  El Profesor es : Pesimo
 Calificacion del profesor = 0.0  El Profesor es : Pesimo
 Calificacion del profesor = 4.848358931552648  El Profesor es : NOTABLE
@@ -11,3 +14,9 @@ Calificacion del profesor = 0.0  El Profesor es : Pesimo
 Calificacion del profesor = 3.3944441634842693  El Profesor es : BUENO
 Calificacion del profesor = 4.848358931552648  El Profesor es : 
 Calificacion del profesor = 4.848358931552648  El Profesor es : NOTABLE
+=======
+>>>>>>> ca47944a8099a1d5ea29bc2f15cde47efac408d4
+Calificacion del profesor = 4.823557939914231  El Profesor es : Excelente
+Calificacion del profesor = 2.000000000000039  El Profesor es : SUFICIENTE
+Calificacion del profesor = 0.6005973322217796  El Profesor es : NO SUFICIENTE
+>>>>>>> 183e4365169cd294c28d683c2c3600e488937221
